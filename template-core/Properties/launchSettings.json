@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "template-core": {
+      "commandName": "Project",
+      "commandLineArgs": "-m d -p \"c:\\Projects\\truckship\\svc.pkg\" -f \"c:\\Projects\\truckship\\svctemplateNew\" -t __NAME__=User"
+    }
+  }
+}
