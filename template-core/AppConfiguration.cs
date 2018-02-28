@@ -1,4 +1,4 @@
-﻿namespace Nlavri.Templifier
+﻿namespace TemplateCore
 {
     using System.Collections.Generic;
     using System.Linq;

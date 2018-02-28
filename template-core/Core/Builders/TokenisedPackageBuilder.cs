@@ -1,4 +1,4 @@
-﻿namespace Nlavri.Templifier.Core.Builders
+﻿namespace TemplateCore.Core.Builders
 {
     #region Using Directives
 
@@ -8,7 +8,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using Processors;
+    using Helpers;
 
     #endregion
 
@@ -17,7 +17,7 @@
         #region Fields
 
         private readonly ManifestBuilder manifestBuilder;
-        private readonly FileContentProcessor fileContentProcessor;
+        private readonly FileContentHelper fileContentProcessor;
         private readonly AppConfiguration appConfiguration;
         private readonly IoHelper ioHelper;
 
@@ -25,7 +25,7 @@
 
         public TokenisedPackageBuilder(
             ManifestBuilder manifestBuilder,
-            FileContentProcessor fileContentProcessor, AppConfiguration appConfiguration, IoHelper ioHelper)
+            FileContentHelper fileContentProcessor, AppConfiguration appConfiguration, IoHelper ioHelper)
         {
             this.manifestBuilder = manifestBuilder;
             this.fileContentProcessor = fileContentProcessor;

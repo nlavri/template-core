@@ -1,12 +1,12 @@
-﻿namespace Nlavri.Templifier.Core.Builders
+﻿namespace TemplateCore.Core.Builders
 {
     #region Using Directives
 
     using System.Collections.Concurrent;
     using System.IO;
     using System.Threading.Tasks;
+    using Helpers;
     using Newtonsoft.Json;
-    using Processors;
 
     #endregion
 

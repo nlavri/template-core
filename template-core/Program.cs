@@ -1,48 +1,61 @@
-﻿using System;
-
-namespace Nlavri.Templifier
+﻿namespace TemplateCore
 {
+    using System;
     using System.Collections.Generic;
-    using System.IO;
+    using System.Reflection;
     using CommandLine;
+    using CommandLine.Text;
     using Core;
-    using Microsoft.Extensions.Configuration;
 
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             try
             {
-                var options = new Parser(config => config.HelpWriter = Console.Out).ParseArguments<CommandOptions>(args)
-                    .WithParsed(RunOptionsAndReturnExitCode)
-                    .WithNotParsed(HandleParseError); ;
+                return new Parser(config => config.HelpWriter = Console.Out)
+                    .ParseArguments<PackOptions, UnpackOptions>(args)
+                    .MapResult(
+                        (PackOptions opts) => RunPackAndReturnExitCode(opts),
+                        (UnpackOptions opts) => RunUnpackAndReturnExitCode(opts),
+                        errs => 1);
+            }
+            catch (TargetInvocationException invocationException)
+            {
+                LogException(invocationException.InnerException ?? invocationException);
             }
             catch (Exception exception)
             {
-                Console.WriteLine("An error encountered : ");
-                Console.WriteLine(exception.Message);
+                LogException(exception);
             }
+
+            return 0;
         }
 
-        private static void HandleParseError(IEnumerable<Error> errs)
+        private static void LogException(Exception exception)
         {
-
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Error.WriteLine("An error encountered : ");
+            Console.Error.WriteLine(exception.Message);
+            Console.ResetColor();
         }
 
-        private static void RunOptionsAndReturnExitCode(CommandOptions options)
+        private static int RunUnpackAndReturnExitCode(UnpackOptions options)
+        {
+            var container = IoC.Init();
+            container.GetInstance<UnpackCommand>().Unpack(options);
+
+            return 0;
+        }
+
+        private static int RunPackAndReturnExitCode(PackOptions options)
         {
             var container = IoC.Init();
 
-            switch (options.SelectedMode)
-            {
-                case CommandOptions.Mode.Create:
-                    container.GetInstance<PackageCreator>().CreatePackage(options);
-                    break;
-                case CommandOptions.Mode.Deploy:
-                    container.GetInstance<PackageDeployer>().DeployPackage(options);
-                    break;
-            }
+            container.GetInstance<PackCommand>().CreatePackage(options);
+
+            return 0;
         }
+
     }
 }

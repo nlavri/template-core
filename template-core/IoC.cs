@@ -1,9 +1,9 @@
-﻿namespace Nlavri.Templifier
+﻿namespace TemplateCore
 {
     using System.IO;
     using Core;
     using Core.Builders;
-    using Core.Processors;
+    using Core.Helpers;
     using Core.Tokeniser;
     using Microsoft.Extensions.Configuration;
     using SimpleInjector;
@@ -15,13 +15,13 @@
             var container = new Container();
             container.Options.AllowOverridingRegistrations = true;
 
-            container.RegisterSingleton<PackageCreator>();
-            container.RegisterSingleton<PackageDeployer>();
+            container.RegisterSingleton<PackCommand>();
+            container.RegisterSingleton<UnpackCommand>();
             container.RegisterSingleton<TemplateTokeniser>();
             container.RegisterSingleton<ManifestBuilder>();
             container.RegisterSingleton<TokenisedPackageBuilder>();
             container.RegisterSingleton<ClonePackageBuilder>();
-            container.RegisterSingleton<FileContentProcessor>();
+            container.RegisterSingleton<FileContentHelper>();
             container.RegisterSingleton<IoHelper>();
 
             var builder = new ConfigurationBuilder()

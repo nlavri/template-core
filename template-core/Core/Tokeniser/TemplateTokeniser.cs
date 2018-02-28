@@ -1,20 +1,20 @@
-namespace Nlavri.Templifier.Core.Tokeniser
+namespace TemplateCore.Core.Tokeniser
 {
     #region Using Directives
 
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Processors;
+    using Helpers;
 
     #endregion
 
     public class TemplateTokeniser
     {
-        private readonly FileContentProcessor fileContentProcessor;
+        private readonly FileContentHelper fileContentProcessor;
         private readonly IoHelper ioHelper;
 
-        public TemplateTokeniser(FileContentProcessor fileContentProcessor, IoHelper ioHelper)
+        public TemplateTokeniser(FileContentHelper fileContentProcessor, IoHelper ioHelper)
         {
             this.fileContentProcessor = fileContentProcessor;
             this.ioHelper = ioHelper;

@@ -1,4 +1,4 @@
-﻿namespace Nlavri.Templifier.Core
+﻿namespace TemplateCore.Core
 {
     #region Using Directives
 

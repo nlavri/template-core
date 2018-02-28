@@ -1,4 +1,4 @@
-namespace Nlavri.Templifier.Core.Processors
+namespace TemplateCore.Core.Helpers
 {
     #region Using Directives
 
@@ -7,7 +7,7 @@ namespace Nlavri.Templifier.Core.Processors
 
     #endregion
 
-    public class FileContentProcessor
+    public class FileContentHelper
     {
         public string ReadContents(string path)
         {

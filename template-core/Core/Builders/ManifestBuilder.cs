@@ -1,4 +1,4 @@
-﻿namespace Nlavri.Templifier.Core.Builders
+﻿namespace TemplateCore.Core.Builders
 {
     #region Using Directives
 
@@ -7,7 +7,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Processors;
+    using Helpers;
 
     #endregion
 

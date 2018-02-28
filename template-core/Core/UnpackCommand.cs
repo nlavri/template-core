@@ -1,4 +1,4 @@
-namespace Nlavri.Templifier.Core
+namespace TemplateCore.Core
 {
     #region Using Directives
 
@@ -6,12 +6,12 @@ namespace Nlavri.Templifier.Core
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
-    using Processors;
+    using Helpers;
     using Tokeniser;
 
     #endregion
 
-    public class PackageDeployer
+    class UnpackCommand
     {
         #region Fields
 
@@ -23,21 +23,19 @@ namespace Nlavri.Templifier.Core
 
         #endregion
 
-        public PackageDeployer(TemplateTokeniser templateTokeniser, AppConfiguration appConfiguration, IoHelper ioHelper)
+        public UnpackCommand(TemplateTokeniser templateTokeniser, AppConfiguration appConfiguration, IoHelper ioHelper)
         {
             this.templateTokeniser = templateTokeniser;
             this.appConfiguration = appConfiguration;
             this.ioHelper = ioHelper;
         }
 
-        public void DeployPackage(CommandOptions options)
+        public void Unpack(UnpackOptions options)
         {
             ZipFile.ExtractToDirectory(options.PackagePath, options.Folder);
 
-            var tokens = new Dictionary<string, string>() { { options.TokenValue.Key, options.TokenValue.Value } };
-
-            ProcessFiles(options.Folder, tokens);
-            CleanUp(options.Folder, tokens);
+            ProcessFiles(options.Folder, options.TokensPairs);
+            CleanUp(options.Folder, options.TokensPairs);
         }
 
         private void CleanUp(string path, Dictionary<string, string> tokens)

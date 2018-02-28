@@ -1,4 +1,4 @@
-﻿namespace Nlavri.Templifier.Core
+﻿namespace TemplateCore.Core
 {
     public class Package
     {

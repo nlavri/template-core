@@ -1,4 +1,4 @@
-namespace Nlavri.Templifier.Core
+namespace TemplateCore.Core
 {
     #region Using Directives
 
@@ -7,11 +7,11 @@ namespace Nlavri.Templifier.Core
     using System.IO.Compression;
     using System.Linq;
     using Builders;
-    using Processors;
+    using Helpers;
 
     #endregion
 
-    public class PackageCreator
+    class PackCommand
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace Nlavri.Templifier.Core
 
         #endregion
 
-        public PackageCreator(
+        public PackCommand(
             ClonePackageBuilder clonePackageBuilder,
             TokenisedPackageBuilder packageTokeniser,
             ManifestBuilder manifestBuilder, IoHelper ioHelper)
@@ -34,23 +34,25 @@ namespace Nlavri.Templifier.Core
             this.ioHelper = ioHelper;
         }
 
-        public void CreatePackage(CommandOptions options)
+        public void CreatePackage(PackOptions options)
         {
             var package = new Package
             {
                 Path = options.Folder,
                 Manifest =
                     this.manifestBuilder.Build(Path.GetFileNameWithoutExtension(options.PackagePath), options.Folder,
-                        new List<string>() { options.TokenValue.Value })
+                         options.TokensPairs.Select(x => x.Value).ToList())
             };
 
             var clonedPackage = this.clonePackageBuilder.Build(package);
-            var tokenizedPackage = this.packageTokeniser.Tokenise(clonedPackage,
-                new Dictionary<string, string>() { { options.TokenValue.Key, options.TokenValue.Value } });
+            var tokenizedPackage = this.packageTokeniser.Tokenise(clonedPackage, options.TokensPairs);
 
             var resultFile = string.IsNullOrEmpty(Path.GetExtension(options.PackagePath))
                 ? options.PackagePath + ".pkg"
                 : options.PackagePath;
+
+            this.ioHelper.RemoveFile(resultFile);
+
             ZipFile.CreateFromDirectory(tokenizedPackage.Path, resultFile, CompressionLevel.Optimal, false);
 
             this.ioHelper.DeleteDirectory(clonedPackage.Path);
