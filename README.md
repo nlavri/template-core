@@ -15,11 +15,11 @@ Useful for microservices templating.
 
 Create Package:
 
-  `dotnet template-core.dll -m c -p C:\MyTemplate.pkg -f "c:\SampleSolutionFolder" -t "SampleBaseNamespace=\__NAME\__"`
+  `dotnet template-core pack -f "c:\TemplateSolutionFolder" -p C:\MyTemplate.pkg -t SampleNamespace`
 
 Deploy Package:
 
-  `dotnet template-core.dll -m d -p C:\MyTemplate.pkg -f "c:\SolutionBasedOnTemplateFolder" -t "\__NAME\__=NewBaseNamespace"`
+  `dotnet template-core unpack -p C:\MyTemplate.pkg -f "c:\NewSolutionFolder" -t NewBaseNamespace`
 
 Usage:
 
