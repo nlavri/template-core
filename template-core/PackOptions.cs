@@ -63,7 +63,7 @@ namespace TemplateCore
 
         public Dictionary<string, string> TokensPairs { get; }
 
-        [Usage()]
+        [Usage(ApplicationAlias = "dotnet template-core.dll")]
         public static IEnumerable<Example> Examples
         {
             get
